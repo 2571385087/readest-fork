@@ -355,7 +355,7 @@ jobs:
           # ("Not Found") into latest.json and clobbering the release asset with
           # invalid JSON, which then breaks tauri-action's updater merge on every
           # subsequent build.
-          if ! curl -fsSL https://github.com/readest/readest/releases/latest/download/latest.json -o latest.json; then
+          if ! curl -fsSL https://github.com/2571385087/readest-fork/releases/latest/download/latest.json -o latest.json; then
             echo "::error::Failed to download existing latest.json; aborting to avoid clobbering the release asset."
             exit 1
           fi
@@ -365,8 +365,8 @@ jobs:
           fi
 
           version=${{ needs.get-release.outputs.release_version }}
-          universial_apk_url="https://github.com/readest/readest/releases/download/${{ needs.get-release.outputs.release_tag }}/Readest_${version}_universal.apk"
-          arm64_apk_url="https://github.com/readest/readest/releases/download/${{ needs.get-release.outputs.release_tag }}/Readest_${version}_arm64.apk"
+          universial_apk_url="https://github.com/2571385087/readest-fork/releases/download/${{ needs.get-release.outputs.release_tag }}/Readest_${version}_universal.apk"
+          arm64_apk_url="https://github.com/2571385087/readest-fork/releases/download/${{ needs.get-release.outputs.release_tag }}/Readest_${version}_arm64.apk"
 
           universial_sig=$(cat Readest_${version}_universal.apk.sig)
           arm64_sig=$(cat Readest_${version}_arm64.apk.sig)
@@ -513,7 +513,7 @@ jobs:
           # ("Not Found") into latest.json and clobbering the release asset with
           # invalid JSON, which then breaks tauri-action's updater merge on every
           # subsequent build.
-          if ! curl -fsSL https://github.com/readest/readest/releases/latest/download/latest.json -o latest.json; then
+          if ! curl -fsSL https://github.com/2571385087/readest-fork/releases/latest/download/latest.json -o latest.json; then
             echo "::error::Failed to download existing latest.json; aborting to avoid clobbering the release asset."
             exit 1
           fi
@@ -536,7 +536,7 @@ jobs:
             exit 1
           fi
 
-          portable_url="https://github.com/readest/readest/releases/download/${{ needs.get-release.outputs.release_tag }}/$bin_file"
+          portable_url="https://github.com/2571385087/readest-fork/releases/download/${{ needs.get-release.outputs.release_tag }}/$bin_file"
           portable_sig=$(cat $bin_file.sig)
 
           jq --arg url "$portable_url" \
@@ -547,11 +547,11 @@ jobs:
           echo "Uploading updated latest.json to GitHub release"
           gh release upload ${{ needs.get-release.outputs.release_tag }} latest.json --clobber
 
-  upload-to-r2:
-    needs: [get-release, build-tauri]
-    permissions:
-      contents: read
-    uses: ./.github/workflows/upload-to-r2.yml
-    with:
-      tag: ${{ needs.get-release.outputs.release_tag }}
-    secrets: inherit
+#  upload-to-r2:
+#    needs: [get-release, build-tauri]
+#    permissions:
+#      contents: read
+#    uses: ./.github/workflows/upload-to-r2.yml
+#    with:
+#      tag: ${{ needs.get-release.outputs.release_tag }}
+#    secrets: inherit
